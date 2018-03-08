@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="email" placeholder="E-mail" id="email">
+    <input type="password" placeholder="Password" id="pass">
+     <button onclick="SignIn()">SignIn</button> <!-- click button SignIn เพื่อให้ function SignIn ทำงาน   -->
+    <button onclick="SignUp()">SignUp</button> <!-- click button SignUp เพื่อให้ function SignUp ทำงาน   -->
+
+    <script>
+        let email = document.getElementById('email'); //การอ้างถึง ไอดี email 
+        let pass = document.getElementById('pass'); //การอ้างถึง ไอดี pass
+        var database = [] // ตัวแปร ชื่อ database เก็บข้อมูลเป็น อาเรย์
+
+        function SignUp() {
+            let emailVal = email.value; //การอ้างถึงค่า ของ ตัวแปร email เก็บค่าไว้ในตัวแปร emailVal
+            let passVal = pass.value; //การอ้างถึงค่า ของ ตัวแปร pass เก็บค่าไว้ในตัวแปร passVal
+            database.push({Email:`${emailVal}`, Password:`${passVal}`}); // เป็นการ push Object ตที่มีค่า email และ passwrd ที่ซ้อนอยู่ในตัวแปร 
+            console.log(database) //log ค่า จากตัวแปร database ออกมาทาง console
+        }
+
+        function SignIn() {
+            let emailVal = email.value; //การอ้างถึงค่า ของ ตัวแปร email เก็บค่าไว้ในตัวแปร emailVal
+            let passVal = pass.value; //การอ้างถึงค่า ของ ตัวแปร pass เก็บค่าไว้ในตัวแปร passVal
+            var checkNum; //ประกาศตัวแปร checkNum มีค่าเป็น undefined
+            for (i = 0; i <= database.length; i++) { // ทำการหลูบเชค แบบ ตามความยาว โดยเชคข้อมูลในตัวแปร database ที่เก็บข้อมูลชนิดอาเรย์เอาไว้ 
+                for (const prop in database[i]) { //ทำการหลูบเชค method ในตัวแปร database ที่เก็บข้อมูลชนิดอาเรย์เอาไว้ โดยระบุเป็นตำแหน่งที่ i
+                    if (prop == "Email") { // ตรวจสอบเชคว่า prop มีค่าตรงกันกับ คำว่า Email หรือไม่ ถ้าใช่ ให้ทำเงื่อนไขต่อไป
+                        if (database[i][prop] == emailVal) { // เชคตัวแปร database ตำแหน่งที่ i เชคเข้าไปอีกในตำแหน่งที่ prop ว่าค่าที่ระบุถึงนั้น ตรงกับค่าที่อยู่ในตัวแปร emailVal หรือไม่ ถ้าใช่ ให้ทำงานในเงื่อนไข
+                            checkNum = i //เก็บค่า i ไว้ในตัวแปร checkNum
+                            console.log("Email OK") //log ค่า Email OK ออกมาทาง console
+                        }
+                    }
+                }
+            }
+
+             if (checkNum == undefined) { //ตรวจสอบว่า ตัวแปร checkNum มีค่าตรงกับ undefined หรือไม ถ้าใช่ ให้ทำงานใน บล็อก if ถ้าไม่ใช่ให้ทำงานใน บล็อก else
+                console.log("Email incorrect") //log ค่า Email incorrect ออกมาทาง console
+            } else {
+                if (passVal == database[checkNum].Password) { // ตรวจสอบค่าตัวแปร passVal ตรงกับค่าตัวแปร database ที่ ระบุถึงตำแหน่งที่ i ตี่ซ้อนอยู่ในตัวแปร checkNum แล้วก็ได้ระบุถึงค่าที่อยู่ใน ตัวแปร Object Password ถ้าใช่ ให้ทำงานในบล็อก if ถ้าไม่ใช่ ให้ทำงานในบล็อก else
+                    console.log("Password OK") //log ค่า Password OK ออกมาทาง console
+                } else {
+                    console.log("Password incorrect") //log ค่าPassword incorrect ออกมาทาง console
+
+                }
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
